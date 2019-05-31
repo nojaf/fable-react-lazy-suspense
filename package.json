@@ -1,0 +1,27 @@
+{
+  "name": "fable-react-lazy-suspense",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/nojaf/fable-react-lazy-suspense.git",
+  "author": "nojaf <florian.verdonck@outlook.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.4.5",
+    "fable-compiler": "^2.3.10",
+    "fable-loader": "^2.1.7",
+    "html-webpack-plugin": "^3.2.0",
+    "webpack": "^4.32.2",
+    "webpack-cli": "^3.3.2",
+    "webpack-dev-server": "^3.4.1"
+  },
+  "dependencies": {
+    "hookrouter": "^1.2.2",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
+  },
+  "scripts": {
+    "postinstall": "paket generate-load-scripts -t fsx",
+    "build": "webpack -p",
+    "start": "webpack-dev-server"
+  }
+}

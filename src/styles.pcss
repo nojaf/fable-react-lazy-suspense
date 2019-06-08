@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css?family=Lato&display=swap');
+
+/* purgecss start ignore */
+@tailwind base;
+/* purgecss end ignore */
+
+@tailwind components;
+
+h1 {
+    @apply text-2xl pb-2;
+}
+
+a {
+    @apply text-blue-700
+}
+
+a:hover {
+    @apply underline;
+}
+
+p {
+    @apply py-2;
+}
+
+.navigation {
+    @apply flex bg-indigo-400 p-4;
+}
+
+.navigation a {
+    @apply text-white;
+}
+
+@tailwind utilities;

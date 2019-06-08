@@ -16,6 +16,8 @@ open HookRouter
 #r "netstandard"
 #endif
 
+importSideEffects "./styles.pcss"
+
 type SuspenseProp =
     | Fallback of ReactElement
 
@@ -42,9 +44,9 @@ let App =
         let path = usePath()
         let navLinkClass (route:string) =
             if (path = "/" && route = "/") || (route <> "/" && path.StartsWith(route)) then
-                AProps.ClassName "nav-item nav-link active"
+                AProps.ClassName "font-bold"
             else
-                AProps.ClassName "nav-item nav-link"
+                AProps.ClassName ""
 
         let activePage =
             match routeResults with
@@ -52,18 +54,17 @@ let App =
                 suspense [Fallback (Loading())] [page]
             | None -> 
                 h1 [] [str "Page not found 🙈"]
+                
+        let menuItem url text =
+            div [ ClassName "mr-6 hover:text-gray-100" ] [ A [AProps.Href url; navLinkClass url ] [str text] ]
 
         fragment [] [
-            nav [ClassName "navbar navbar-expand-lg navbar-light bg-light"] [
-                div [ClassName "collapse navbar-collapse"] [
-                    div [ClassName "navbar-nav"] [
-                        A [AProps.Href "/"; navLinkClass "/" ] [str "Home"]
-                        A [AProps.Href "/about"; navLinkClass "/about" ] [str "About"]
-                        A [AProps.Href "/products"; navLinkClass "/products" ] [str "Products"]
-                    ]
-                ]
+            nav [ ClassName "navigation"] [
+                menuItem "/" "Home"
+                menuItem "/about" "About"
+                menuItem "/products"  "Products"
             ]
-            main [ClassName "container"] [activePage]
+            main [ClassName "container sm:p-0 mx-auto mt-4"] [activePage]
         ]
     , "App")
 

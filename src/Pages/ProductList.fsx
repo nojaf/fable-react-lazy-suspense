@@ -33,14 +33,14 @@ let private ProductList =
         let products =
             Map.toList productCatalog
             |> List.map (fun (id, { Name = name }) ->
-                li [Key (id.ToString())] [
-                    A [ AProps.Href (sprintf "/products/%d" id); ] [str name]
+                li [Key (id.ToString()); ClassName "my-2"] [
+                    A [ AProps.Href (sprintf "/products/%d" id)] [str name]
                 ]
             )
 
         fragment [] [
             h1 [] [str "Products"]
-            ul [ClassName "mt-5"] (List.singleton (ofList products))
+            ul [ClassName "mt-4 list-disc"] (List.singleton (ofList products))
         ]
     )
 

@@ -4,8 +4,7 @@ module.exports = {
       padding: "2rem"
     },
     fontFamily: {
-      body: "Lato",
-      display: "Lato"
+      sans: "Lato, sans-serif"
     }
   },
   variants: {},

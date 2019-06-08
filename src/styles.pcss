@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Lato&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Lato&display=swap");
 
 /* purgecss start ignore */
 @tailwind base;
@@ -6,28 +6,32 @@
 
 @tailwind components;
 
+html {
+  font-family: "Lato", sans-serif;
+}
+
 h1 {
-    @apply text-2xl pb-2;
+  @apply text-2xl pb-2;
 }
 
 a {
-    @apply text-blue-700
+  @apply text-blue-700;
 }
 
 a:hover {
-    @apply underline;
+  @apply underline;
 }
 
 p {
-    @apply py-2;
+  @apply py-2;
 }
 
 .navigation {
-    @apply flex bg-indigo-400 p-4;
+  @apply flex bg-indigo-400 p-4;
 }
 
 .navigation a {
-    @apply text-white;
+  @apply text-white;
 }
 
 @tailwind utilities;

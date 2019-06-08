@@ -53,6 +53,7 @@ module.exports = {
     contentBase: "./public",
     port: 8080,
     hot: true,
+    inline: true,
     historyApiFallback: true
   },
   module: {

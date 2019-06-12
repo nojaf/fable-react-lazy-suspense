@@ -1,13 +1,13 @@
+@tailwind base;
+
 @import url("https://fonts.googleapis.com/css?family=Lato&display=swap");
 
-/* purgecss start ignore */
-@tailwind base;
-/* purgecss end ignore */
-
-@tailwind components;
-
 html {
-  font-family: "Lato", sans-serif;
+  font-family: Lato, sans-serif;
+}
+
+html, body {
+  @apply h-full;
 }
 
 h1 {
@@ -25,6 +25,8 @@ a:hover {
 p {
   @apply py-2;
 }
+
+@tailwind components;
 
 .navigation {
   @apply flex bg-indigo-400 p-4;

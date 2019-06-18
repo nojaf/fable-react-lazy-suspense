@@ -8,6 +8,8 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const PurgecssPlugin = require("purgecss-webpack-plugin");
 const glob = require("glob");
 const webpack = require("webpack");
+const http = require('http');
+const fs = require('fs');
 
 const isProduction = !process.argv.find(
   v => v.indexOf("webpack-dev-server") !== -1
@@ -17,32 +19,49 @@ console.log(`Building for ${isProduction ? "production" : "development"}`);
 
 const babel = {};
 
+const defaultPlugins = [
+  new MiniCssExtractPlugin({
+    filename: "styles.css",
+    chunkFilename: "styles.css"
+  }),
+  new HtmlWebpackPlugin({
+    filename: "index.html",
+    template: "./public/index.html"
+  })
+];
 const plugins = isProduction
   ? [
-      new HtmlWebpackPlugin({
-        filename: "index.html",
-        template: "./public/index.html"
-      }),
-      new MiniCssExtractPlugin({
-        filename: "styles.css",
-        chunkFilename: "styles.css"
-      }),
+      ...defaultPlugins,
       new PurgecssPlugin({
         paths: () =>
           glob.sync(`${path.join(__dirname, "src")}/**/*`, { nodir: true })
       })
     ]
   : [
-      new HtmlWebpackPlugin({
-        filename: "index.html",
-        template: "./public/index.html"
-      }),
-      new webpack.HotModuleReplacementPlugin()
-    ];
+    {
+      apply: (compiler) => {
+        compiler.hooks.afterCompile.tap('nojaf', (compilation) => {
+          if(compilation.entrypoints.has('style')){
+            console.log('DEES IS EM');
+            const cssFile = fs.createWriteStream("./public/styles.css");
+            http.get("http://localhost:8080/styles.css", (response, err) => {
+                console.log("downloaded file");
+                response.pipe(cssFile);
+                console.log("written to disk")
+            });
+          }
+        });
+      }
+    },
+      ...defaultPlugins
+  ];
 
 module.exports = {
   mode: "development",
-  entry: "./src/App.fsx",
+  entry: { 
+    "app":"./src/App.fsx",
+    "style": "./src/styles.pcss"
+  },
   output: {
     path: path.join(__dirname, "./docs"),
     filename: "[name].bundle.js",
@@ -70,7 +89,12 @@ module.exports = {
       {
         test: /\.pcss$/,
         use: [
-          isProduction ? MiniCssExtractPlugin.loader : "style-loader",
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              hmr: !isProduction
+            }
+          },
           {
             loader: "css-loader",
             options: {

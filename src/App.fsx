@@ -16,7 +16,10 @@ open HookRouter
 #r "netstandard"
 #endif
 
-importSideEffects "./styles.pcss"
+// importSideEffects "./styles.pcss"
+type Tailwind = Flora.Stylesheet<"C:\\Temp\\fable-react-lazy-suspense\\public\\styles.css">
+
+let a = 7
 
 type SuspenseProp =
     | Fallback of ReactElement
@@ -37,6 +40,8 @@ let routes =
         "/products" ==> fun _ -> ReactBindings.React.createElement(ProductList, null, [])
         "/products/:id" ==> fun (props:ProductDetail.RouteProps) -> ReactBindings.React.createElement(ProductDetail, props, [])
     ]
+
+// http://localhost:8080/styles.css
 
 let App =
     FunctionComponent.Of (fun () ->
@@ -59,7 +64,7 @@ let App =
             div [ ClassName "mr-6 hover:text-gray-100" ] [ A [AProps.Href url; navLinkClass url ] [str text] ]
 
         fragment [] [
-            nav [ ClassName "navigation"] [
+            nav [ ClassName "" ] [
                 menuItem "/" "Home"
                 menuItem "/about" "About"
                 menuItem "/products"  "Products"
